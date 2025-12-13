@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Home, User, Menu, ChevronDown, Play, Pause } from 'lucide-react';
+import { Heart, Home, User, Menu, ChevronDown, Play } from 'lucide-react';
 import { fetchVideos, fetchUserWallet, recordAdView, getVideoPublicUrl, Video } from '../lib/supabase';
 
 interface ContentItem {
@@ -68,8 +68,6 @@ export default function AdWatcherSupabase() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userId] = useState('demo-user-123'); // Replace with actual user ID from auth
-  const [videoTime, setVideoTime] = useState(0);
-  const [videoCompleted, setVideoCompleted] = useState(false);
   const [isVideoPaused, setIsVideoPaused] = useState(false);
   const feedContainerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -185,7 +183,6 @@ export default function AdWatcherSupabase() {
       
       // Record ad view in Supabase
       await recordAdView(userId, ad.id, true, ad.reward);
-      setVideoCompleted(true);
     }
   };
 
@@ -202,13 +199,9 @@ export default function AdWatcherSupabase() {
         setWatchedItems([...watchedItems, currentIndex]);
       }
       setCurrentIndex((prev) => (prev + 1) % contentList.length);
-      setVideoTime(0);
-      setVideoCompleted(false);
     } else {
       // Scroll up - previous content
       setCurrentIndex((prev) => (prev - 1 + contentList.length) % contentList.length);
-      setVideoTime(0);
-      setVideoCompleted(false);
     }
 
     setTimeout(() => setIsTransitioning(false), 300);
