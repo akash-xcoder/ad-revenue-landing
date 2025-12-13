@@ -80,12 +80,18 @@ export default function AdWatcherSupabase() {
     const loadContent = async () => {
       try {
         const videos = await fetchVideos();
+        console.log('Fetched videos:', videos);
         
         // Create content list with ads every 2 videos
         const content: ContentItem[] = [];
         let adIndex = 0;
 
+        if (videos.length === 0) {
+          console.warn('No videos found in database');
+        }
+
         videos.forEach((video, index) => {
+          console.log(`Processing video ${index}:`, video.storage_path);
           content.push({
             id: `video-${video.id}`,
             type: 'video',
@@ -103,6 +109,7 @@ export default function AdWatcherSupabase() {
           }
         });
 
+        console.log('Content list created:', content);
         setContentList(content);
         setLoading(false);
       } catch (error) {
@@ -292,7 +299,10 @@ export default function AdWatcherSupabase() {
                           }
                         }}
                         onError={(e) => {
+                          const video = e.target as HTMLVideoElement;
                           console.error('Video error:', e);
+                          console.error('Video error code:', video.error?.code);
+                          console.error('Video error message:', video.error?.message);
                           console.log('Video URL:', getVideoPublicUrl((currentItem.data as Video).storage_path));
                         }}
                       >

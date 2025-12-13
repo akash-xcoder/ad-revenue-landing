@@ -11,6 +11,7 @@ import Navigation from './components/Navigation';
 import AdWatcherSupabase from './components/AdWatcherSupabase';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import AdminPanel from './components/AdminPanel';
 import GlowingBubbles from './components/GlowingBubbles';
 
 function LandingPage() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/admin" element={<AdminPanel />} />
         <Route path="/watch-ads" element={<AdWatcherSupabase />} />
       </Routes>
     </Router>

@@ -184,10 +184,53 @@ export async function uploadVideo(file: File, userId: string, metadata?: { title
 
 // Get public URL for video
 export function getVideoPublicUrl(storagePath: string) {
-  // Construct the direct public URL for the video
-  const baseUrl = supabaseUrl;
-  // If storagePath already starts with 'videos/', use it as-is
-  const path = storagePath.startsWith('videos/') ? storagePath : `videos/${storagePath}`;
-  const publicUrl = `${baseUrl}/storage/v1/object/public/${path}`;
-  return publicUrl;
+  // Use Supabase's getPublicUrl method which handles CORS properly
+  try {
+    // Remove 'videos/' prefix if it exists since we're already in the videos bucket
+    const cleanPath = storagePath.startsWith('videos/') 
+      ? storagePath.substring(7) 
+      : storagePath;
+    
+    const { data } = supabase.storage
+      .from('videos')
+      .getPublicUrl(cleanPath);
+    
+    console.log('Generated video URL:', data.publicUrl);
+    return data.publicUrl;
+  } catch (error) {
+    console.error('Error generating video URL:', error);
+    return '';
+  }
+}
+
+// Register videos from storage to database
+export async function registerVideoInDatabase(storagePath: string, filename: string, metadata?: { title?: string; description?: string; duration?: number }) {
+  try {
+    const { data, error } = await supabase
+      .from('videos')
+      .insert([
+        {
+          user_id: 'admin',
+          filename: filename,
+          storage_path: storagePath,
+          size: 0,
+          mime: 'video/mp4',
+          title: metadata?.title || filename,
+          description: metadata?.description || 'Watch this video and earn',
+          duration: metadata?.duration || 30,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error registering video:', error);
+      return null;
+    }
+    console.log('Video registered:', data);
+    return data;
+  } catch (error) {
+    console.error('Error in registerVideoInDatabase:', error);
+    return null;
+  }
 }
