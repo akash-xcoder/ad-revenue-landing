@@ -79,16 +79,47 @@ export default function AdWatcherSupabase() {
   useEffect(() => {
     const loadContent = async () => {
       try {
-        const videos = await fetchVideos();
+        let videos = await fetchVideos();
         console.log('Fetched videos:', videos);
+        
+        // If no videos found, register the default ones
+        if (videos.length === 0) {
+          console.warn('No videos found in database, registering default videos...');
+          const { registerVideoInDatabase } = await import('../lib/supabase');
+          
+          const defaultVideos = [
+            {
+              storagePath: 'videos/AQOgywJRNGGe3EDs6oX3c3VRQ6PITTFh8dC8WXbj5zpjm9wpUGTMsLeucsUOthk35gL0vGbKBq_JBxmx_UnWF_brbpP6rXMSgJSdVAg.mp4',
+              filename: 'video1.mp4',
+              title: 'Sample Video 1',
+              description: 'Watch this video and earn rewards',
+              duration: 30,
+            },
+            {
+              storagePath: 'videos/AQOx32u2qsJZGUEn31TpNftau3gxMG1lW8BFvrtXhwtU16MwF8O5XkCs2A9oh-f6xoWPA5pj7H14_BzBzsTmQGICIEvjkR-RDpPO5rU.mp4',
+              filename: 'video2.mp4',
+              title: 'Sample Video 2',
+              description: 'Watch this video and earn rewards',
+              duration: 30,
+            },
+          ];
+
+          for (const video of defaultVideos) {
+            await registerVideoInDatabase(video.storagePath, video.filename, {
+              title: video.title,
+              description: video.description,
+              duration: video.duration,
+            });
+          }
+
+          // Fetch videos again after registering
+          videos = await fetchVideos();
+          console.log('Videos after registration:', videos);
+        }
         
         // Create content list with ads every 2 videos
         const content: ContentItem[] = [];
         let adIndex = 0;
-
-        if (videos.length === 0) {
-          console.warn('No videos found in database');
-        }
 
         videos.forEach((video, index) => {
           console.log(`Processing video ${index}:`, video.storage_path);

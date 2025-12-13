@@ -184,28 +184,57 @@ export async function uploadVideo(file: File, userId: string, metadata?: { title
 
 // Get public URL for video
 export function getVideoPublicUrl(storagePath: string) {
-  // Use Supabase's getPublicUrl method which handles CORS properly
   try {
+    // The storagePath from database might be just the filename or full path
+    // Supabase storage path format: bucket/path/to/file
+    let cleanPath = storagePath;
+    
     // Remove 'videos/' prefix if it exists since we're already in the videos bucket
-    const cleanPath = storagePath.startsWith('videos/') 
-      ? storagePath.substring(7) 
-      : storagePath;
+    if (cleanPath.startsWith('videos/')) {
+      cleanPath = cleanPath.substring(7);
+    }
     
     const { data } = supabase.storage
       .from('videos')
       .getPublicUrl(cleanPath);
     
-    console.log('Generated video URL:', data.publicUrl);
-    return data.publicUrl;
+    const url = data.publicUrl;
+    console.log('Storage path:', storagePath);
+    console.log('Clean path:', cleanPath);
+    console.log('Generated video URL:', url);
+    return url;
   } catch (error) {
     console.error('Error generating video URL:', error);
-    return '';
+    // Fallback: construct URL manually
+    const baseUrl = 'https://dwhwkaihpqeypmhnciac.supabase.co/storage/v1/object/public/videos/';
+    const cleanPath = storagePath.startsWith('videos/') 
+      ? storagePath.substring(7) 
+      : storagePath;
+    const fallbackUrl = baseUrl + cleanPath;
+    console.log('Using fallback URL:', fallbackUrl);
+    return fallbackUrl;
   }
 }
 
 // Register videos from storage to database
 export async function registerVideoInDatabase(storagePath: string, filename: string, metadata?: { title?: string; description?: string; duration?: number }) {
   try {
+    // Check if video already exists
+    const { data: existingVideos, error: checkError } = await supabase
+      .from('videos')
+      .select('*')
+      .eq('storage_path', storagePath);
+
+    if (checkError) {
+      console.error('Error checking for existing video:', checkError);
+    }
+
+    if (existingVideos && existingVideos.length > 0) {
+      console.log('Video already exists:', existingVideos[0]);
+      return existingVideos[0];
+    }
+
+    // Register new video
     const { data, error } = await supabase
       .from('videos')
       .insert([
