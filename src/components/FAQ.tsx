@@ -6,8 +6,8 @@ export default function FAQ() {
 
   const faqs = [
     {
-      question: 'Is AdEarn really free to use?',
-      answer: 'Yes, AdEarn is 100% free to join and use. There are no hidden fees, no credit card required, and no charges for withdrawals. You only earn money.',
+      question: 'Is AdzoPay really free to use?',
+      answer: 'Yes, AdzoPay is 100% free to join and use. There are no hidden fees, no credit card required, and no charges for withdrawals. You only earn money.',
     },
     {
       question: 'How much can I earn?',
@@ -26,8 +26,8 @@ export default function FAQ() {
       answer: 'Simply sign up with your email, verify your account, and start watching ads. You can begin earning within minutes of signing up.',
     },
     {
-      question: 'Can I use AdEarn on mobile?',
-      answer: 'Yes, AdEarn works on all devices including smartphones, tablets, and computers. Download our mobile app for the best experience.',
+      question: 'Can I use AdzoPay on mobile?',
+      answer: 'Yes, AdzoPay works on all devices including smartphones, tablets, and computers. Download our mobile app for the best experience.',
     },
     {
       question: 'What payment methods are supported?',

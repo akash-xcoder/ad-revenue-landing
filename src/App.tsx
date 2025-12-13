@@ -8,7 +8,7 @@ import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
-import AdWatcher from './components/AdWatcher';
+import AdWatcherSupabase from './components/AdWatcherSupabase';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import GlowingBubbles from './components/GlowingBubbles';
@@ -35,7 +35,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/watch-ads" element={<AdWatcher />} />
+        <Route path="/watch-ads" element={<AdWatcherSupabase />} />
       </Routes>
     </Router>
   );

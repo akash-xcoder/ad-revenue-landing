@@ -15,7 +15,7 @@ export default function Navigation() {
             <div className="w-8 h-8 bg-gradient-to-br from-primary via-neon-blue to-neon-purple rounded-lg flex items-center justify-center neon-glow">
               <span className="text-white font-bold text-lg">$</span>
             </div>
-            <span className="text-xl font-bold gradient-text hidden sm:inline">AdEarn</span>
+            <span className="text-xl font-bold gradient-text hidden sm:inline">AdzoPay</span>
           </div>
 
           {/* Desktop Menu */}

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, MessageCircle, Send, Bookmark, Home, Search, User, Menu, ChevronDown } from 'lucide-react';
+import { Heart, Home, Search, User, Menu, ChevronDown } from 'lucide-react';
 
 interface Ad {
   id: number;
@@ -165,7 +165,7 @@ export default function AdWatcher() {
           onClick={() => navigate('/')}
           className="text-2xl font-bold mb-12 gradient-text hover:opacity-80 transition bg-none border-none cursor-pointer p-0"
         >
-          AdEarn
+          AdzoPay
         </button>
         
         <nav className="space-y-6 flex-1">
@@ -204,7 +204,7 @@ export default function AdWatcher() {
 
             {/* Header */}
             <div className="bg-gradient-to-b from-dark-bg to-transparent px-4 py-4 flex justify-between items-center border-b border-neutral-light/10">
-              <div className="text-lg font-bold gradient-text">AdEarn</div>
+              <div className="text-lg font-bold gradient-text">AdzoPay</div>
               <Menu size={24} className="text-neutral-light hover:text-primary transition" />
             </div>
 
@@ -257,28 +257,6 @@ export default function AdWatcher() {
                   <span className="text-xs font-bold text-neutral-light/70">{isLiked ? '1.2K' : '1.1K'}</span>
                 </button>
 
-                {/* Comment Button */}
-                <button className="flex flex-col items-center gap-2 hover:scale-125 transition-transform duration-200 active:scale-90">
-                  <div className="w-14 h-14 bg-dark-card/80 backdrop-blur rounded-full flex items-center justify-center hover:bg-primary/30 transition-all duration-300 shadow-lg hover:shadow-primary/50 text-neutral-light">
-                    <MessageCircle size={24} />
-                  </div>
-                  <span className="text-xs font-bold text-neutral-light/70">560</span>
-                </button>
-
-                {/* Share Button */}
-                <button className="flex flex-col items-center gap-2 hover:scale-125 transition-transform duration-200 active:scale-90">
-                  <div className="w-14 h-14 bg-dark-card/80 backdrop-blur rounded-full flex items-center justify-center hover:bg-neon-green/30 transition-all duration-300 shadow-lg hover:shadow-glow-green text-neutral-light">
-                    <Send size={24} />
-                  </div>
-                  <span className="text-xs font-bold text-neutral-light/70">Share</span>
-                </button>
-
-                {/* Bookmark Button */}
-                <button className="flex flex-col items-center gap-2 hover:scale-125 transition-transform duration-200 active:scale-90">
-                  <div className="w-14 h-14 bg-dark-card/80 backdrop-blur rounded-full flex items-center justify-center hover:bg-neon-blue/30 transition-all duration-300 shadow-lg hover:shadow-glow-blue text-neutral-light">
-                    <Bookmark size={24} />
-                  </div>
-                </button>
               </div>
 
               {/* Bottom Info */}
@@ -292,9 +270,6 @@ export default function AdWatcher() {
                     <p className="font-semibold text-sm text-neutral-light">{currentAd.username}</p>
                     <p className="text-xs text-neutral-light/60">Official Account</p>
                   </div>
-                  <button className="px-4 py-1 bg-gradient-to-r from-primary to-neon-blue text-white rounded-full font-semibold text-xs hover:shadow-glow-blue transition-all duration-200 hover:scale-105 active:scale-95">
-                    Follow
-                  </button>
                 </div>
 
                 {/* Description */}

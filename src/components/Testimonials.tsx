@@ -8,7 +8,7 @@ export default function Testimonials() {
       role: 'Student',
       image: '👩‍🎓',
       rating: 5,
-      text: 'I started using AdEarn last month and have already earned $150! The process is so simple and the payouts are instant. Highly recommended!',
+      text: 'I started using AdzoPay last month and have already earned $150! The process is so simple and the payouts are instant. Highly recommended!',
     },
     {
       name: 'Michael Chen',
@@ -22,14 +22,14 @@ export default function Testimonials() {
       role: 'Stay-at-home Parent',
       image: '👩‍🦰',
       rating: 5,
-      text: 'I can earn money while taking care of my kids. No pressure, no commitments. AdEarn has been a game-changer for my family.',
+      text: 'I can earn money while taking care of my kids. No pressure, no commitments. AdzoPay has been a game-changer for my family.',
     },
     {
       name: 'James Wilson',
       role: 'Remote Worker',
       image: '👨‍💻',
       rating: 5,
-      text: 'The best part is the instant payouts. I can withdraw my earnings whenever I want. Trust is everything, and AdEarn delivers.',
+      text: 'The best part is the instant payouts. I can withdraw my earnings whenever I want. Trust is everything, and AdzoPay delivers.',
     },
     {
       name: 'Lisa Anderson',
@@ -43,7 +43,7 @@ export default function Testimonials() {
       role: 'Part-time Worker',
       image: '👨‍🔧',
       rating: 5,
-      text: 'I was skeptical at first, but AdEarn is legit. Transparent, reliable, and the customer support is amazing.',
+      text: 'I was skeptical at first, but AdzoPay is legit. Transparent, reliable, and the customer support is amazing.',
     },
   ];
 
