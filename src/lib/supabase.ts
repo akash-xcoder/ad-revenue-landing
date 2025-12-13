@@ -186,6 +186,8 @@ export async function uploadVideo(file: File, userId: string, metadata?: { title
 export function getVideoPublicUrl(storagePath: string) {
   // Construct the direct public URL for the video
   const baseUrl = supabaseUrl;
-  const publicUrl = `${baseUrl}/storage/v1/object/public/videos/${storagePath.replace('videos/', '')}`;
+  // If storagePath already starts with 'videos/', use it as-is
+  const path = storagePath.startsWith('videos/') ? storagePath : `videos/${storagePath}`;
+  const publicUrl = `${baseUrl}/storage/v1/object/public/${path}`;
   return publicUrl;
 }
