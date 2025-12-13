@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Heart, Home, User, Menu, ChevronDown, Play } from 'lucide-react';
 import { fetchVideos, fetchUserWallet, recordAdView, getVideoPublicUrl, Video } from '../lib/supabase';
+import { getCurrentUser } from '../lib/supabaseAuth';
 
 interface ContentItem {
   id: string;
@@ -69,9 +70,29 @@ export default function AdWatcherSupabase() {
   const [loading, setLoading] = useState(true);
   const [userId] = useState('demo-user-123'); // Replace with actual user ID from auth
   const [isVideoPaused, setIsVideoPaused] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const feedContainerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const lastScrollTime = useRef<number>(0);
+
+  // Check authentication
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const user = await getCurrentUser();
+        if (!user) {
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Error checking auth:', error);
+        navigate('/login');
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   // Load videos from Supabase and create content list
   useEffect(() => {
@@ -214,6 +235,17 @@ export default function AdWatcherSupabase() {
       return () => container.removeEventListener('wheel', handleScroll);
     }
   }, [currentIndex, contentList, isTransitioning, isWatched, watchedItems]);
+
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-dark-bg via-dark-bg to-neutral-dark flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary border-t-neon-blue rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-neutral-light text-lg">Verifying authentication...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (

@@ -8,17 +8,19 @@ import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
+import Header from './components/Header';
 import AdWatcherSupabase from './components/AdWatcherSupabase';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AdminPanel from './components/AdminPanel';
 import GlowingBubbles from './components/GlowingBubbles';
+import AuthCallback from './components/AuthCallback';
 
 function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-dark-bg via-dark-bg to-neutral-dark relative overflow-hidden">
       <GlowingBubbles />
-      <Navigation />
+      <Header />
       <Hero />
       <HowItWorks />
       <Features />
@@ -36,6 +38,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/watch-ads" element={<AdWatcherSupabase />} />
       </Routes>

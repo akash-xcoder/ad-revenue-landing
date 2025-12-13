@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, TrendingUp } from 'lucide-react';
+import { getCurrentUser } from '../lib/supabaseAuth';
 
 export default function Hero() {
   const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error('Error checking user:', error);
+      }
+    };
+
+    checkUser();
+  }, []);
+
+  const handleStartEarning = () => {
+    if (!user) {
+      navigate('/signup');
+    } else {
+      navigate('/watch-ads');
+    }
+  };
 
   return (
     <section className="relative overflow-hidden py-20 lg:py-32 bg-gradient-to-br from-dark-bg via-dark-bg to-neutral-dark">
@@ -32,7 +55,7 @@ export default function Hero() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <button
-                onClick={() => navigate('/watch-ads')}
+                onClick={handleStartEarning}
                 className="btn-neon-solid px-8 py-4 rounded-xl font-semibold flex items-center justify-center gap-2 group"
               >
                 Start Earning Now

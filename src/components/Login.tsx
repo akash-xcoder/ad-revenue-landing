@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader } from 'lucide-react';
+import { signInWithEmail, signInWithGoogle, getCurrentUser } from '../lib/supabaseAuth';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -8,16 +9,88 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    // Simulate login
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate('/watch-ads');
-    }, 1000);
+  useEffect(() => {
+    const checkUserAuth = async () => {
+      try {
+        const user = await getCurrentUser();
+        if (user) {
+          navigate('/');
+        }
+      } catch (error) {
+        console.error('Error checking auth:', error);
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    };
+
+    checkUserAuth();
+  }, [navigate]);
+
+  const validateLogin = (): boolean => {
+    if (!email.trim()) {
+      setError('Email is required');
+      return false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError('Please enter a valid email address');
+      return false;
+    }
+    if (!password) {
+      setError('Password is required');
+      return false;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return false;
+    }
+    return true;
   };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    
+    if (!validateLogin()) {
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      await signInWithEmail(email, password);
+      navigate('/');
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign in');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError('');
+    setIsLoading(true);
+    
+    try {
+      await signInWithGoogle();
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign in with Google');
+      setIsLoading(false);
+    }
+  };
+
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-dark-bg via-dark-bg to-neutral-dark flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <p className="text-neutral-light mt-4">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-dark-bg via-dark-bg to-neutral-dark flex items-center justify-center px-4 py-12">
@@ -81,6 +154,13 @@ export default function Login() {
             </div>
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
+              {error}
+            </div>
+          )}
+
           {/* Remember & Forgot */}
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center gap-2 cursor-pointer">
@@ -112,8 +192,13 @@ export default function Login() {
 
         {/* Social Login */}
         <div className="grid grid-cols-2 gap-4">
-          <button className="card-dark py-3 rounded-xl font-semibold text-neutral-light hover:border-primary/50 transition">
-            Google
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={isLoading}
+            className="card-dark py-3 rounded-xl font-semibold text-neutral-light hover:border-primary/50 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {isLoading ? <Loader size={18} className="animate-spin" /> : 'Google'}
           </button>
           <button className="card-dark py-3 rounded-xl font-semibold text-neutral-light hover:border-primary/50 transition">
             GitHub

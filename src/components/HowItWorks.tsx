@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserPlus, Play, Wallet, CreditCard } from 'lucide-react';
+import { getCurrentUser } from '../lib/supabaseAuth';
 
 export default function HowItWorks() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error('Error checking user:', error);
+      }
+    };
+
+    checkUser();
+  }, []);
+
+  const handleStartJourney = () => {
+    if (!user) {
+      navigate('/signup');
+    } else {
+      navigate('/watch-ads');
+    }
+  };
   const steps = [
     {
       icon: UserPlus,
@@ -74,7 +99,7 @@ export default function HowItWorks() {
 
         {/* Bottom CTA */}
         <div className="mt-16 text-center">
-          <button className="btn-neon-solid px-10 py-4 rounded-xl font-semibold inline-flex items-center gap-2">
+          <button onClick={handleStartJourney} className="btn-neon-solid px-10 py-4 rounded-xl font-semibold inline-flex items-center gap-2">
             Start Your Journey
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />

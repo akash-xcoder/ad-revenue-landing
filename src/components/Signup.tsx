@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff, ArrowRight, Loader } from 'lucide-react';
+import { signUpWithEmail, signInWithGoogle, getCurrentUser } from '../lib/supabaseAuth';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -14,33 +15,124 @@ export default function Signup() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [error, setError] = useState('');
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    const checkUserAuth = async () => {
+      try {
+        const user = await getCurrentUser();
+        if (user) {
+          navigate('/');
+        }
+      } catch (error) {
+        console.error('Error checking auth:', error);
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    };
+
+    checkUserAuth();
+  }, [navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault();
+  const validateSignup = (): boolean => {
+    if (!formData.fullName.trim()) {
+      setError('Full name is required');
+      return false;
+    }
+    if (formData.fullName.trim().length < 2) {
+      setError('Full name must be at least 2 characters');
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setError('Email is required');
+      return false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setError('Please enter a valid email address');
+      return false;
+    }
+    if (!formData.password) {
+      setError('Password is required');
+      return false;
+    }
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return false;
+    }
+    if (!/[A-Z]/.test(formData.password)) {
+      setError('Password must contain at least one uppercase letter');
+      return false;
+    }
+    if (!/[0-9]/.test(formData.password)) {
+      setError('Password must contain at least one number');
+      return false;
+    }
+    if (!formData.confirmPassword) {
+      setError('Please confirm your password');
+      return false;
+    }
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
-      return;
+      setError('Passwords do not match');
+      return false;
     }
     if (!agreedToTerms) {
-      alert('Please agree to the terms and conditions');
+      setError('Please agree to the terms and conditions');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    
+    if (!validateSignup()) {
       return;
     }
+    
     setIsLoading(true);
-    // Simulate signup
-    setTimeout(() => {
+    try {
+      await signUpWithEmail(formData.email, formData.password, formData.fullName);
+      navigate('/');
+    } catch (err: any) {
+      setError(err.message || 'Failed to create account');
+    } finally {
       setIsLoading(false);
-      navigate('/watch-ads');
-    }, 1000);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    setError('');
+    setIsLoading(true);
+    
+    try {
+      await signInWithGoogle();
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign up with Google');
+      setIsLoading(false);
+    }
   };
 
   const passwordStrength = formData.password.length > 0 ? Math.min(Math.ceil(formData.password.length / 3), 3) : 0;
   const strengthLabels = ['Weak', 'Fair', 'Strong'];
   const strengthColors = ['bg-red-500', 'bg-yellow-500', 'bg-green-500'];
+
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-dark-bg via-dark-bg to-neutral-dark flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <p className="text-neutral-light mt-4">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-dark-bg via-dark-bg to-neutral-dark flex items-center justify-center px-4 py-12">
@@ -159,6 +251,13 @@ export default function Signup() {
             </div>
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
+              {error}
+            </div>
+          )}
+
           {/* Terms Checkbox */}
           <label className="flex items-start gap-3 cursor-pointer">
             <input
@@ -199,8 +298,13 @@ export default function Signup() {
 
         {/* Social Signup */}
         <div className="grid grid-cols-2 gap-4">
-          <button type="button" className="card-dark py-3 rounded-xl font-semibold text-neutral-light hover:border-primary/50 transition">
-            Google
+          <button
+            type="button"
+            onClick={handleGoogleSignUp}
+            disabled={isLoading}
+            className="card-dark py-3 rounded-xl font-semibold text-neutral-light hover:border-primary/50 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {isLoading ? <Loader size={18} className="animate-spin" /> : 'Google'}
           </button>
           <button type="button" className="card-dark py-3 rounded-xl font-semibold text-neutral-light hover:border-primary/50 transition">
             GitHub
