@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Heart, Home, User, Menu, ChevronDown, Play } from 'lucide-react';
 import { fetchVideos, fetchUserWallet, recordAdView, getVideoPublicUrl, Video } from '../lib/supabase';
@@ -207,7 +207,7 @@ export default function AdWatcherSupabase() {
     }
   };
 
-  const handleScroll = (e: WheelEvent) => {
+  const handleScroll = useCallback((e: WheelEvent) => {
     const now = Date.now();
     if (now - lastScrollTime.current < 600 || isTransitioning) return;
     lastScrollTime.current = now;
@@ -217,7 +217,7 @@ export default function AdWatcherSupabase() {
     if (e.deltaY > 0) {
       // Scroll down - next content
       if (!isWatched && currentItem?.type === 'video') {
-        setWatchedItems([...watchedItems, currentIndex]);
+        setWatchedItems((prev) => [...prev, currentIndex]);
       }
       setCurrentIndex((prev) => (prev + 1) % contentList.length);
     } else {
@@ -226,7 +226,7 @@ export default function AdWatcherSupabase() {
     }
 
     setTimeout(() => setIsTransitioning(false), 300);
-  };
+  }, [isTransitioning, isWatched, currentItem, currentIndex, contentList]);
 
   useEffect(() => {
     const container = feedContainerRef.current;
@@ -234,7 +234,7 @@ export default function AdWatcherSupabase() {
       container.addEventListener('wheel', handleScroll, { passive: false });
       return () => container.removeEventListener('wheel', handleScroll);
     }
-  }, [currentIndex, contentList, isTransitioning, isWatched, watchedItems]);
+  }, [handleScroll]);
 
   if (isCheckingAuth) {
     return (

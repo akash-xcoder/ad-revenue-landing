@@ -7,7 +7,6 @@ import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
-import Navigation from './components/Navigation';
 import Header from './components/Header';
 import AdWatcherSupabase from './components/AdWatcherSupabase';
 import Login from './components/Login';
