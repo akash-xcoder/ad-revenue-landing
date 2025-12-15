@@ -38,8 +38,11 @@ export default function Header() {
   ];
 
   const navLinks = [
-    { href: '/watch-ads', label: 'Watch Ads', icon: Play },
-    { href: '/earnings', label: 'Earnings', icon: Wallet },
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '#about' },
+    { label: 'Services', href: '#services' },
+    { label: 'Pricing', href: '#pricing' },
+    { label: 'Solution', href: '#solution' },
   ];
 
   useEffect(() => {
@@ -81,7 +84,6 @@ export default function Header() {
     };
   }, []);
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -121,14 +123,14 @@ export default function Header() {
 
   if (isLoading) {
     return (
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+      <header className="sticky top-0 z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#000080] rounded-xl flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-white" />
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-700 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">A</span>
               </div>
-              <span className="text-xl font-bold text-[#000080]">AdzoPay</span>
+              <span className="text-lg font-bold text-white">AdzoPay</span>
             </div>
           </div>
         </div>
@@ -137,106 +139,34 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-[#000080] rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
-              <DollarSign className="w-6 h-6 text-white" />
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-700 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+              <span className="text-white font-bold text-sm">A</span>
             </div>
-            <span className="text-xl font-bold text-[#000080] hidden sm:block">AdzoPay</span>
+            <span className="text-lg font-bold text-white hidden sm:block">AdzoPay</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
-                  isActiveLink(link.href)
-                    ? 'bg-[#000080]/10 text-[#000080]'
-                    : 'text-[#898989] hover:text-[#000080] hover:bg-gray-50'
-                }`}
+                className="text-gray-300 hover:text-white font-medium transition-colors"
               >
-                <link.icon className="w-4 h-4" />
                 {link.label}
               </Link>
             ))}
-
-            {/* How it Works - for non-logged users */}
-            {!user && (
-              <Link
-                href="/#how-it-works"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-[#898989] hover:text-[#000080] hover:bg-gray-50 transition-all"
-              >
-                <HelpCircle className="w-4 h-4" />
-                How it Works
-              </Link>
-            )}
           </nav>
 
           {/* Right Section */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             {user ? (
               <>
-                {/* Balance Display */}
-                <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-green-50 rounded-lg border border-green-100">
-                  <Wallet className="w-4 h-4 text-green-600" />
-                  <span className="font-semibold text-green-700">${balance.toFixed(2)}</span>
-                </div>
-
-                {/* Notifications */}
-                <div className="relative" ref={notificationRef}>
-                  <button
-                    onClick={() => {
-                      setShowNotifications(!showNotifications);
-                      setShowDropdown(false);
-                    }}
-                    className="relative p-2 rounded-lg hover:bg-gray-100 transition text-[#898989] hover:text-[#000080]"
-                  >
-                    <Bell className="w-5 h-5" />
-                    {notifications.some(n => n.unread) && (
-                      <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-                    )}
-                  </button>
-
-                  {/* Notifications Dropdown */}
-                  {showNotifications && (
-                    <div className="absolute right-0 mt-2 w-80 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden">
-                      <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-                        <h3 className="font-semibold text-[#222222]">Notifications</h3>
-                        <button className="text-sm text-[#000080] hover:underline">Mark all read</button>
-                      </div>
-                      <div className="max-h-80 overflow-y-auto">
-                        {notifications.map((notification) => (
-                          <div
-                            key={notification.id}
-                            className={`px-4 py-3 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition ${
-                              notification.unread ? 'bg-blue-50/50' : ''
-                            }`}
-                          >
-                            <div className="flex items-start gap-3">
-                              <div className={`w-2 h-2 rounded-full mt-2 ${notification.unread ? 'bg-[#000080]' : 'bg-gray-300'}`} />
-                              <div className="flex-1">
-                                <p className="font-medium text-[#222222] text-sm">{notification.title}</p>
-                                <p className="text-[#898989] text-sm">{notification.message}</p>
-                                <p className="text-xs text-[#898989] mt-1">{notification.time}</p>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="px-4 py-3 border-t border-gray-100">
-                        <button className="w-full text-center text-sm text-[#000080] hover:underline">
-                          View all notifications
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
                 {/* User Dropdown */}
                 <div className="relative" ref={dropdownRef}>
                   <button
@@ -244,93 +174,52 @@ export default function Header() {
                       setShowDropdown(!showDropdown);
                       setShowNotifications(false);
                     }}
-                    className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-gray-100 transition"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/10 transition"
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#000080] flex items-center justify-center text-white text-sm font-bold">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white text-sm font-bold">
                       {getUserInitials()}
                     </div>
-                    <div className="hidden sm:block text-left">
-                      <p className="text-sm font-medium text-[#222222] leading-tight">
-                        {user.user_metadata?.full_name || user.email?.split('@')[0]}
-                      </p>
-                      <p className="text-xs text-[#898989]">Gold Member</p>
-                    </div>
-                    <ChevronDown className={`w-4 h-4 text-[#898989] transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                   </button>
 
-                  {/* User Dropdown Menu */}
                   {showDropdown && (
-                    <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden">
-                      {/* User Info */}
-                      <div className="px-4 py-4 bg-gradient-to-r from-[#000080] to-[#000080]/80">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white text-lg font-bold">
-                            {getUserInitials()}
-                          </div>
-                          <div>
-                            <p className="font-semibold text-white">
-                              {user.user_metadata?.full_name || 'User'}
-                            </p>
-                            <p className="text-white/70 text-sm">{user.email}</p>
-                          </div>
-                        </div>
-                        <div className="mt-3 flex items-center gap-2">
-                          <Star className="w-4 h-4 text-amber-400" />
-                          <span className="text-white/90 text-sm">Gold Member</span>
-                        </div>
+                    <div className="absolute right-0 mt-2 w-56 bg-gray-900 border border-gray-800 rounded-xl shadow-lg overflow-hidden">
+                      <div className="px-4 py-3 border-b border-gray-800">
+                        <p className="text-sm font-semibold text-white">{user.user_metadata?.full_name || 'User'}</p>
+                        <p className="text-xs text-gray-400">{user.email}</p>
                       </div>
-
-                      {/* Balance in dropdown */}
-                      <div className="px-4 py-3 bg-gray-50 border-b border-gray-100">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-[#898989]">Balance</span>
-                          <span className="font-bold text-[#000080]">${balance.toFixed(2)}</span>
-                        </div>
-                      </div>
-
-                      {/* Menu Items */}
                       <div className="py-2">
                         <Link
                           href="/profile"
                           onClick={() => setShowDropdown(false)}
-                          className="flex items-center gap-3 px-4 py-2.5 text-[#222222] hover:bg-gray-50 transition"
+                          className="flex items-center gap-3 px-4 py-2.5 text-white hover:bg-gray-800 transition"
                         >
-                          <User className="w-5 h-5 text-[#898989]" />
-                          <span>My Profile</span>
+                          <User className="w-4 h-4" />
+                          <span className="text-sm">Profile</span>
                         </Link>
                         <Link
                           href="/earnings"
                           onClick={() => setShowDropdown(false)}
-                          className="flex items-center gap-3 px-4 py-2.5 text-[#222222] hover:bg-gray-50 transition"
+                          className="flex items-center gap-3 px-4 py-2.5 text-white hover:bg-gray-800 transition"
                         >
-                          <Wallet className="w-5 h-5 text-[#898989]" />
-                          <span>Earnings</span>
-                        </Link>
-                        <Link
-                          href="/watch-ads"
-                          onClick={() => setShowDropdown(false)}
-                          className="flex items-center gap-3 px-4 py-2.5 text-[#222222] hover:bg-gray-50 transition"
-                        >
-                          <Play className="w-5 h-5 text-[#898989]" />
-                          <span>Watch Ads</span>
+                          <Wallet className="w-4 h-4" />
+                          <span className="text-sm">Earnings</span>
                         </Link>
                         <Link
                           href="/settings"
                           onClick={() => setShowDropdown(false)}
-                          className="flex items-center gap-3 px-4 py-2.5 text-[#222222] hover:bg-gray-50 transition"
+                          className="flex items-center gap-3 px-4 py-2.5 text-white hover:bg-gray-800 transition"
                         >
-                          <Settings className="w-5 h-5 text-[#898989]" />
-                          <span>Settings</span>
+                          <Settings className="w-4 h-4" />
+                          <span className="text-sm">Settings</span>
                         </Link>
                       </div>
-
-                      {/* Logout */}
-                      <div className="border-t border-gray-100 py-2">
+                      <div className="border-t border-gray-800 py-2">
                         <button
                           onClick={handleLogout}
-                          className="flex items-center gap-3 px-4 py-2.5 text-red-600 hover:bg-red-50 transition w-full"
+                          className="flex items-center gap-3 px-4 py-2.5 text-red-400 hover:bg-red-900/30 transition w-full text-sm"
                         >
-                          <LogOut className="w-5 h-5" />
+                          <LogOut className="w-4 h-4" />
                           <span>Sign Out</span>
                         </button>
                       </div>
@@ -342,17 +231,15 @@ export default function Header() {
               <>
                 <Link
                   href="/login"
-                  className="hidden sm:block px-5 py-2 text-[#000080] font-semibold hover:bg-gray-50 rounded-lg transition"
+                  className="hidden sm:block px-4 py-2 text-gray-300 font-medium hover:text-white transition"
                 >
-                  Sign In
+                  Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="px-5 py-2 bg-[#000080] text-white font-semibold rounded-lg hover:bg-[#000080]/90 transition flex items-center gap-2"
+                  className="px-4 py-2 bg-white text-black font-semibold rounded-lg hover:bg-gray-100 transition"
                 >
-                  <Zap className="w-4 h-4" />
-                  <span className="hidden sm:inline">Get Started</span>
-                  <span className="sm:hidden">Start</span>
+                  Register
                 </Link>
               </>
             )}
@@ -360,7 +247,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition text-[#222222]"
+              className="md:hidden p-2 rounded-lg hover:bg-white/10 transition text-white"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -369,133 +256,33 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100">
-            {user ? (
-              <div className="space-y-2">
-                {/* User Info */}
-                <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-lg mb-4">
-                  <div className="w-10 h-10 rounded-full bg-[#000080] flex items-center justify-center text-white font-bold">
-                    {getUserInitials()}
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-[#222222]">
-                      {user.user_metadata?.full_name || 'User'}
-                    </p>
-                    <p className="text-sm text-[#898989]">{user.email}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-[#000080]">${balance.toFixed(2)}</p>
-                    <p className="text-xs text-[#898989]">Balance</p>
-                  </div>
-                </div>
-
-                {/* Navigation Links */}
+          <div className="md:hidden py-4 border-t border-gray-800 space-y-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className="block px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition"
+              >
+                {link.label}
+              </Link>
+            ))}
+            {!user && (
+              <div className="pt-4 mt-4 border-t border-gray-800 space-y-2">
                 <Link
-                  href="/watch-ads"
+                  href="/login"
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                    isActiveLink('/watch-ads')
-                      ? 'bg-[#000080]/10 text-[#000080]'
-                      : 'text-[#222222] hover:bg-gray-50'
-                  }`}
+                  className="block px-4 py-2 text-center text-gray-300 hover:text-white transition"
                 >
-                  <Play className="w-5 h-5" />
-                  <span className="font-medium">Watch Ads</span>
+                  Login
                 </Link>
                 <Link
-                  href="/earnings"
+                  href="/signup"
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                    isActiveLink('/earnings')
-                      ? 'bg-[#000080]/10 text-[#000080]'
-                      : 'text-[#222222] hover:bg-gray-50'
-                  }`}
+                  className="block px-4 py-2 text-center bg-white text-black font-semibold rounded-lg hover:bg-gray-100 transition"
                 >
-                  <Wallet className="w-5 h-5" />
-                  <span className="font-medium">Earnings</span>
+                  Register
                 </Link>
-                <Link
-                  href="/profile"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                    isActiveLink('/profile')
-                      ? 'bg-[#000080]/10 text-[#000080]'
-                      : 'text-[#222222] hover:bg-gray-50'
-                  }`}
-                >
-                  <User className="w-5 h-5" />
-                  <span className="font-medium">Profile</span>
-                </Link>
-                <Link
-                  href="/settings"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                    isActiveLink('/settings')
-                      ? 'bg-[#000080]/10 text-[#000080]'
-                      : 'text-[#222222] hover:bg-gray-50'
-                  }`}
-                >
-                  <Settings className="w-5 h-5" />
-                  <span className="font-medium">Settings</span>
-                </Link>
-
-                {/* Logout */}
-                <div className="pt-2 mt-2 border-t border-gray-100">
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setIsOpen(false);
-                    }}
-                    className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition w-full"
-                  >
-                    <LogOut className="w-5 h-5" />
-                    <span className="font-medium">Sign Out</span>
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                <Link
-                  href="/watch-ads"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-[#222222] hover:bg-gray-50 rounded-lg transition"
-                >
-                  <Play className="w-5 h-5" />
-                  <span className="font-medium">Watch Ads</span>
-                </Link>
-                <Link
-                  href="/earnings"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-[#222222] hover:bg-gray-50 rounded-lg transition"
-                >
-                  <Wallet className="w-5 h-5" />
-                  <span className="font-medium">Earnings</span>
-                </Link>
-                <Link
-                  href="/#how-it-works"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-[#222222] hover:bg-gray-50 rounded-lg transition"
-                >
-                  <HelpCircle className="w-5 h-5" />
-                  <span className="font-medium">How it Works</span>
-                </Link>
-
-                <div className="pt-4 mt-2 border-t border-gray-100 space-y-2">
-                  <Link
-                    href="/login"
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 text-center font-semibold text-[#000080] border border-[#000080] rounded-lg hover:bg-[#000080]/5 transition"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/signup"
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 text-center font-semibold text-white bg-[#000080] rounded-lg hover:bg-[#000080]/90 transition"
-                  >
-                    Get Started Free
-                  </Link>
-                </div>
               </div>
             )}
           </div>

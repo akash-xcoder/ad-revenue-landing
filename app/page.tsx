@@ -1,19 +1,19 @@
 import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Features from './components/Features';
-import Testimonials from './components/Testimonials';
-import HowItWorks from './components/HowItWorks';
+import HowItWorksSection from './components/HowItWorksSection';
+import WhyChooseUsSection from './components/WhyChooseUsSection';
+import LiveCashoutSection from './components/LiveCashoutSection';
 import Footer from './components/Footer';
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black">
       <Header />
       <Hero />
-      <Features />
-      <HowItWorks />
-      <Testimonials />
+      <HowItWorksSection />
+      <WhyChooseUsSection />
+      <LiveCashoutSection />
       <Footer />
     </div>
   );
