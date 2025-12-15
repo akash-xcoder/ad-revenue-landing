@@ -65,23 +65,25 @@ export default function Header() {
 
     checkUser();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (session?.user) {
-          setUser({
-            id: session.user.id,
-            email: session.user.email,
-            user_metadata: session.user.user_metadata,
-          });
-        } else {
-          setUser(null);
+    if (supabase) {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+          if (session?.user) {
+            setUser({
+              id: session.user.id,
+              email: session.user.email,
+              user_metadata: session.user.user_metadata,
+            });
+          } else {
+            setUser(null);
+          }
         }
-      }
-    );
+      );
 
-    return () => {
-      subscription?.unsubscribe();
-    };
+      return () => {
+        subscription?.unsubscribe();
+      };
+    }
   }, []);
 
   useEffect(() => {
