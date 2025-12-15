@@ -138,40 +138,40 @@ export default function Signup() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark-bg via-dark-bg to-neutral-dark flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-0 w-96 h-96 bg-primary opacity-15 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-neon-blue opacity-10 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 right-0 w-96 h-96 bg-green-500 opacity-10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-500 opacity-5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary via-neon-blue to-neon-purple rounded-lg flex items-center justify-center neon-glow">
-              <span className="text-white font-bold text-xl">$</span>
+            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-700 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">A</span>
             </div>
-            <span className="text-2xl font-bold gradient-text">AdzoPay</span>
+            <span className="text-2xl font-bold text-white">AdzoPay</span>
           </div>
-          <h1 className="text-4xl font-bold text-neutral-light mb-2">Create Account</h1>
-          <p className="text-neutral-light/60">Join thousands earning money by watching ads</p>
+          <h1 className="text-4xl font-bold text-white mb-2">Create Account</h1>
+          <p className="text-gray-400">Join thousands earning money by watching ads</p>
         </div>
 
         {/* Signup Form */}
         <form onSubmit={handleSignup} className="space-y-5">
           {/* Full Name Field */}
           <div>
-            <label className="block text-sm font-medium text-neutral-light mb-2">Full Name</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
             <div className="relative">
-              <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary" size={20} />
+              <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-400" size={20} />
               <input
                 type="text"
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
                 placeholder="John Doe"
-                className="w-full pl-12 pr-4 py-3 bg-dark-card border border-primary/20 rounded-xl text-neutral-light placeholder-neutral-light/40 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                className="w-full pl-12 pr-4 py-3 bg-gray-900/50 border border-green-500/20 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition"
                 required
               />
             </div>
@@ -179,16 +179,16 @@ export default function Signup() {
 
           {/* Email Field */}
           <div>
-            <label className="block text-sm font-medium text-neutral-light mb-2">Email Address</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary" size={20} />
+              <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-400" size={20} />
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
-                className="w-full pl-12 pr-4 py-3 bg-dark-card border border-primary/20 rounded-xl text-neutral-light placeholder-neutral-light/40 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                className="w-full pl-12 pr-4 py-3 bg-gray-900/50 border border-green-500/20 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition"
                 required
               />
             </div>
@@ -196,22 +196,22 @@ export default function Signup() {
 
           {/* Password Field */}
           <div>
-            <label className="block text-sm font-medium text-neutral-light mb-2">Password</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary" size={20} />
+              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-400" size={20} />
               <input
                 type={showPassword ? 'text' : 'password'}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full pl-12 pr-12 py-3 bg-dark-card border border-primary/20 rounded-xl text-neutral-light placeholder-neutral-light/40 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                className="w-full pl-12 pr-12 py-3 bg-gray-900/50 border border-green-500/20 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-light/60 hover:text-neutral-light transition"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-300 transition"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -219,35 +219,35 @@ export default function Signup() {
             {/* Password Strength */}
             {formData.password && (
               <div className="mt-2 flex items-center gap-2">
-                <div className="flex-1 h-1 bg-neutral-800 rounded-full overflow-hidden">
+                <div className="flex-1 h-1 bg-gray-800 rounded-full overflow-hidden">
                   <div
                     className={`h-full ${strengthColors[passwordStrength - 1]} transition-all duration-300`}
                     style={{ width: `${(passwordStrength / 3) * 100}%` }}
                   ></div>
                 </div>
-                <span className="text-xs text-neutral-light/60">{strengthLabels[passwordStrength - 1]}</span>
+                <span className="text-xs text-gray-500">{strengthLabels[passwordStrength - 1]}</span>
               </div>
             )}
           </div>
 
           {/* Confirm Password Field */}
           <div>
-            <label className="block text-sm font-medium text-neutral-light mb-2">Confirm Password</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Confirm Password</label>
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary" size={20} />
+              <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-400" size={20} />
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full pl-12 pr-12 py-3 bg-dark-card border border-primary/20 rounded-xl text-neutral-light placeholder-neutral-light/40 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                className="w-full pl-12 pr-12 py-3 bg-gray-900/50 border border-green-500/20 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-neutral-light/60 hover:text-neutral-light transition"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-300 transition"
               >
                 {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -267,15 +267,15 @@ export default function Signup() {
               type="checkbox"
               checked={agreedToTerms}
               onChange={(e) => setAgreedToTerms(e.target.checked)}
-              className="w-4 h-4 rounded bg-dark-card border border-primary/20 cursor-pointer mt-1"
+              className="w-4 h-4 rounded bg-gray-900 border border-green-500/20 cursor-pointer mt-1"
             />
-            <span className="text-sm text-neutral-light/70">
+            <span className="text-sm text-gray-400">
               I agree to the{' '}
-              <button type="button" className="text-primary hover:text-neon-blue transition">
+              <button type="button" className="text-green-400 hover:text-green-300 transition">
                 Terms of Service
               </button>
               {' '}and{' '}
-              <button type="button" className="text-primary hover:text-neon-blue transition">
+              <button type="button" className="text-green-400 hover:text-green-300 transition">
                 Privacy Policy
               </button>
             </span>
@@ -285,7 +285,7 @@ export default function Signup() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full btn-neon-solid py-3 rounded-xl font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-white text-black font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Creating account...' : 'Create Account'}
             {!isLoading && <ArrowRight size={20} />}
@@ -294,9 +294,9 @@ export default function Signup() {
 
         {/* Divider */}
         <div className="flex items-center gap-4 my-6">
-          <div className="flex-1 h-px bg-neutral-light/10"></div>
-          <span className="text-neutral-light/60 text-sm">Or continue with</span>
-          <div className="flex-1 h-px bg-neutral-light/10"></div>
+          <div className="flex-1 h-px bg-gray-700"></div>
+          <span className="text-gray-400 text-sm">Or continue with</span>
+          <div className="flex-1 h-px bg-gray-700"></div>
         </div>
 
         {/* Social Signup */}
@@ -305,21 +305,21 @@ export default function Signup() {
             type="button"
             onClick={handleGoogleSignUp}
             disabled={isLoading}
-            className="card-dark py-3 rounded-xl font-semibold text-neutral-light hover:border-primary/50 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="bg-gray-900 border border-gray-700 py-3 rounded-xl font-semibold text-white hover:border-green-500/50 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isLoading ? <Loader size={18} className="animate-spin" /> : 'Google'}
           </button>
-          <button type="button" className="card-dark py-3 rounded-xl font-semibold text-neutral-light hover:border-primary/50 transition">
+          <button type="button" className="bg-gray-900 border border-gray-700 py-3 rounded-xl font-semibold text-white hover:border-green-500/50 transition">
             GitHub
           </button>
         </div>
 
         {/* Login Link */}
-        <p className="text-center text-neutral-light/70 mt-6">
+        <p className="text-center text-gray-400 mt-6">
           Already have an account?{' '}
           <Link
             href="/login"
-            className="text-primary hover:text-neon-blue font-semibold transition"
+            className="text-green-400 hover:text-green-300 font-semibold transition"
           >
             Sign in
           </Link>
@@ -329,7 +329,7 @@ export default function Signup() {
         <p className="text-center mt-4">
           <Link
             href="/"
-            className="text-neutral-light/50 hover:text-neutral-light text-sm transition"
+            className="text-gray-500 hover:text-gray-300 text-sm transition"
           >
             Back to Home
           </Link>
