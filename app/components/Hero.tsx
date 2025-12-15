@@ -31,17 +31,17 @@ export default function Hero() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black overflow-hidden pt-20">
+    <div className="relative h-screen bg-black overflow-hidden">
       {/* Gradient background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500/20 rounded-full blur-3xl opacity-30"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl opacity-30"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-200px)]">
+      <div className="relative w-full h-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center h-full">
           {/* Left Content */}
-          <div className="space-y-8 order-2 lg:order-1">
+          <div className="space-y-8 order-2 lg:order-1 px-4 sm:px-6 lg:px-8 max-w-2xl">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/50 rounded-full">
               <Zap className="w-4 h-4 text-green-400" />
@@ -93,12 +93,12 @@ export default function Hero() {
           </div>
 
           {/* Right Side - Image */}
-          <div className="relative hidden lg:flex items-center justify-center order-1 lg:order-2">
+          <div className="relative hidden lg:flex items-center justify-center order-1 lg:order-2 h-full">
             <div className="relative w-full h-full flex items-center justify-center">
               <img 
                 src="/images/earning-image.jpg" 
                 alt="Earn Money by Watching Ads" 
-                className="w-full max-w-2xl h-auto object-contain drop-shadow-2xl rounded-2xl"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
