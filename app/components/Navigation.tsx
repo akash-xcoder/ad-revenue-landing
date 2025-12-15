@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 export default function Navigation() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -36,10 +36,10 @@ export default function Navigation() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex gap-3 items-center">
-            <button onClick={() => navigate('/login')} className="btn-neon px-6 py-2 rounded-lg font-semibold">
+            <button onClick={() => router.push('/login')} className="btn-neon px-6 py-2 rounded-lg font-semibold">
               Sign In
             </button>
-            <button onClick={() => navigate('/signup')} className="btn-neon-solid px-6 py-2 rounded-lg font-semibold">
+            <button onClick={() => router.push('/signup')} className="btn-neon-solid px-6 py-2 rounded-lg font-semibold">
               Get Started
             </button>
           </div>
@@ -69,10 +69,10 @@ export default function Navigation() {
               FAQ
             </a>
             <div className="flex gap-2 pt-2">
-              <button onClick={() => navigate('/login')} className="flex-1 btn-neon px-4 py-2 rounded-lg font-semibold text-sm">
+              <button onClick={() => router.push('/login')} className="flex-1 btn-neon px-4 py-2 rounded-lg font-semibold text-sm">
                 Sign In
               </button>
-              <button onClick={() => navigate('/signup')} className="flex-1 btn-neon-solid px-4 py-2 rounded-lg font-semibold text-sm">
+              <button onClick={() => router.push('/signup')} className="flex-1 btn-neon-solid px-4 py-2 rounded-lg font-semibold text-sm">
                 Get Started
               </button>
             </div>

@@ -1,8 +1,23 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Heart, Home, User, Menu, ChevronDown, Play } from 'lucide-react';
-import { fetchVideos, fetchUserWallet, recordAdView, getVideoPublicUrl, Video } from '../lib/supabase';
+// import { fetchVideos, fetchUserWallet, recordAdView, getVideoPublicUrl, Video } from '../lib/supabase';
 import { getCurrentUser } from '../lib/supabaseAuth';
+
+// Mock types and functions
+interface Video {
+  id: string;
+  title: string;
+  description: string;
+  duration: number;
+  thumbnail?: string;
+  storage_path?: string;
+}
+
+const fetchVideos = async () => [];
+const fetchUserWallet = async (userId: string) => ({ balance: 0 });
+const recordAdView = async (userId: string, videoId: string, watchTime: number, earnedAmount: number) => true;
+const getVideoPublicUrl = async (storagePath: string) => '';
 
 interface ContentItem {
   id: string;
@@ -60,7 +75,7 @@ const sampleAds: Ad[] = [
 ];
 
 export default function AdWatcherSupabase() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [contentList, setContentList] = useState<ContentItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [earnedAmount, setEarnedAmount] = useState(0);
@@ -81,18 +96,18 @@ export default function AdWatcherSupabase() {
       try {
         const user = await getCurrentUser();
         if (!user) {
-          navigate('/login');
+          router.push('/login');
         }
       } catch (error) {
         console.error('Error checking auth:', error);
-        navigate('/login');
+        router.push('/login');
       } finally {
         setIsCheckingAuth(false);
       }
     };
 
     checkAuth();
-  }, [navigate]);
+  }, [router]);
 
   // Load videos from Supabase and create content list
   useEffect(() => {
@@ -104,7 +119,7 @@ export default function AdWatcherSupabase() {
         // If no videos found, register the default ones
         if (videos.length === 0) {
           console.warn('No videos found in database, registering default videos...');
-          const { registerVideoInDatabase } = await import('../lib/supabase');
+          // const { registerVideoInDatabase } = await import('../lib/supabase');
           
           const defaultVideos = [
             {
@@ -123,16 +138,16 @@ export default function AdWatcherSupabase() {
             },
           ];
 
-          for (const video of defaultVideos) {
-            await registerVideoInDatabase(video.storagePath, video.filename, {
-              title: video.title,
-              description: video.description,
-              duration: video.duration,
-            });
-          }
+          // for (const video of defaultVideos) {
+          //   await registerVideoInDatabase(video.storagePath, video.filename, {
+          //     title: video.title,
+          //     description: video.description,
+          //     duration: video.duration,
+          //   });
+          // }
 
-          // Fetch videos again after registering
-          videos = await fetchVideos();
+          // // Fetch videos again after registering
+          // videos = await fetchVideos();
           console.log('Videos after registration:', videos);
         }
         
@@ -203,7 +218,7 @@ export default function AdWatcherSupabase() {
       setEarnedAmount(earnedAmount + ad.reward);
       
       // Record ad view in Supabase
-      await recordAdView(userId, ad.id, true, ad.reward);
+      await recordAdView(userId, String(ad.id), 1, ad.reward);
     }
   };
 
@@ -264,7 +279,7 @@ export default function AdWatcherSupabase() {
         <div className="text-center">
           <p className="text-neutral-light text-xl mb-4">No content available</p>
           <button
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="btn-neon-solid px-6 py-3 rounded-lg font-semibold"
           >
             Go Home
@@ -279,7 +294,7 @@ export default function AdWatcherSupabase() {
       {/* Sidebar Navigation */}
       <div className="hidden md:flex flex-col w-64 border-r border-neutral-light/10 p-6 fixed h-screen bg-gradient-to-b from-dark-bg to-neutral-dark glass">
         <button
-          onClick={() => navigate('/')}
+          onClick={() => router.push('/')}
           className="text-2xl font-bold mb-12 gradient-text hover:opacity-80 transition bg-none border-none cursor-pointer p-0"
         >
           AdzoPay
@@ -287,7 +302,7 @@ export default function AdWatcherSupabase() {
 
         <nav className="space-y-6 flex-1">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-dark-card/50 transition bg-none border-none cursor-pointer text-neutral-light/70 hover:text-neutral-light text-left"
           >
             <Home size={24} />
@@ -322,7 +337,7 @@ export default function AdWatcherSupabase() {
             {/* Header */}
             <div className="bg-gradient-to-b from-dark-bg to-transparent px-4 py-4 flex justify-between items-center border-b border-neutral-light/10">
               <button
-                onClick={() => navigate('/')}
+                onClick={() => router.push('/')}
                 className="text-lg font-bold gradient-text hover:opacity-80 transition bg-none border-none cursor-pointer p-0"
               >
                 AdzoPay
@@ -364,10 +379,10 @@ export default function AdWatcherSupabase() {
                           console.error('Video error:', e);
                           console.error('Video error code:', video.error?.code);
                           console.error('Video error message:', video.error?.message);
-                          console.log('Video URL:', getVideoPublicUrl((currentItem.data as Video).storage_path));
+                          // console.log('Video URL:', getVideoPublicUrl((currentItem.data as Video).storage_path));
                         }}
                       >
-                        <source src={getVideoPublicUrl((currentItem.data as Video).storage_path)} type="video/mp4" />
+                        <source src={''} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
 

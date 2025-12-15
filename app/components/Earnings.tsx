@@ -163,13 +163,13 @@ export default function Earnings() {
 
           {/* Daily Progress */}
           <Card className="border-0 shadow-sm mb-6 bg-card">
-            <CardHeader>
+            <CardHeader className="">
               <CardTitle className="text-lg text-foreground">Daily Goal Progress</CardTitle>
               <CardDescription className="text-muted-foreground">
                 You've earned ${earningsData.dailyProgress.toFixed(2)} of your ${earningsData.dailyGoal.toFixed(2)} daily goal
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="">
               <div className="space-y-4">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Progress</span>
@@ -194,7 +194,7 @@ export default function Earnings() {
 
           {/* Transaction History */}
           <Card className="border-0 shadow-sm bg-card">
-            <CardHeader>
+            <CardHeader className="">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                   <CardTitle className="text-lg text-foreground">Transaction History</CardTitle>
@@ -219,14 +219,15 @@ export default function Earnings() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4">
               {/* Search and Filter */}
               <div className="flex gap-3 mb-4">
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
+                  <input
+                    type="text"
                     placeholder="Search transactions..."
-                    className="pl-10 border-border focus:border-primary focus:ring-primary/20 bg-muted"
+                    className="w-full px-3 py-2 bg-muted border border-input rounded-md text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <Button variant="outline" className="border-border text-muted-foreground">

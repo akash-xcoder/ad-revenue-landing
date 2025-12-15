@@ -128,7 +128,7 @@ export default function Settings() {
               {/* Account Settings */}
               {activeSection === 'account' && (
                 <Card className="border-0 shadow-sm bg-card">
-                  <CardHeader>
+                  <CardHeader className="">
                     <CardTitle className="text-lg text-foreground">Account Information</CardTitle>
                     <CardDescription className="text-muted-foreground">
                       Update your account details
@@ -139,6 +139,7 @@ export default function Settings() {
                       <Label htmlFor="fullName" className="text-foreground">Full Name</Label>
                       <Input
                         id="fullName"
+                        type="text"
                         defaultValue={user?.user_metadata?.full_name || ''}
                         className="border-border focus:border-primary focus:ring-primary/20 bg-muted"
                       />
@@ -171,7 +172,7 @@ export default function Settings() {
               {/* Notifications Settings */}
               {activeSection === 'notifications' && (
                 <Card className="border-0 shadow-sm bg-card">
-                  <CardHeader>
+                  <CardHeader className="">
                     <CardTitle className="text-lg text-foreground">Notification Preferences</CardTitle>
                     <CardDescription className="text-muted-foreground">
                       Choose how you want to be notified
@@ -184,28 +185,31 @@ export default function Settings() {
                         <p className="text-sm text-muted-foreground">Receive updates via email</p>
                       </div>
                       <Switch
+                        className=""
                         checked={settings.emailNotifications}
                         onCheckedChange={() => handleToggle('emailNotifications')}
                       />
                     </div>
-                    <Separator />
+                    <Separator className="" />
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
                         <p className="font-medium text-foreground">Push Notifications</p>
                         <p className="text-sm text-muted-foreground">Receive push notifications</p>
                       </div>
                       <Switch
+                        className=""
                         checked={settings.pushNotifications}
                         onCheckedChange={() => handleToggle('pushNotifications')}
                       />
                     </div>
-                    <Separator />
+                    <Separator className="" />
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
                         <p className="font-medium text-foreground">Marketing Emails</p>
                         <p className="text-sm text-muted-foreground">Receive promotional content</p>
                       </div>
                       <Switch
+                        className=""
                         checked={settings.marketingEmails}
                         onCheckedChange={() => handleToggle('marketingEmails')}
                       />
@@ -218,7 +222,7 @@ export default function Settings() {
               {activeSection === 'security' && (
                 <>
                   <Card className="border-0 shadow-sm bg-card">
-                    <CardHeader>
+                    <CardHeader className="">
                       <CardTitle className="text-lg text-foreground">Change Password</CardTitle>
                       <CardDescription className="text-muted-foreground">
                         Update your password regularly for security
@@ -289,13 +293,13 @@ export default function Settings() {
                   </Card>
 
                   <Card className="border-0 shadow-sm bg-card">
-                    <CardHeader>
+                    <CardHeader className="">
                       <CardTitle className="text-lg text-foreground">Two-Factor Authentication</CardTitle>
                       <CardDescription className="text-muted-foreground">
                         Add an extra layer of security to your account
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
@@ -309,6 +313,7 @@ export default function Settings() {
                           </div>
                         </div>
                         <Switch
+                          className=""
                           checked={settings.twoFactorAuth}
                           onCheckedChange={() => handleToggle('twoFactorAuth')}
                         />
@@ -321,7 +326,7 @@ export default function Settings() {
               {/* Payment Settings */}
               {activeSection === 'payment' && (
                 <Card className="border-0 shadow-sm bg-card">
-                  <CardHeader>
+                  <CardHeader className="">
                     <CardTitle className="text-lg text-foreground">Payment Methods</CardTitle>
                     <CardDescription className="text-muted-foreground">
                       Manage your withdrawal methods
@@ -371,7 +376,7 @@ export default function Settings() {
               {/* Preferences Settings */}
               {activeSection === 'preferences' && (
                 <Card className="border-0 shadow-sm bg-card">
-                  <CardHeader>
+                  <CardHeader className="">
                     <CardTitle className="text-lg text-foreground">App Preferences</CardTitle>
                     <CardDescription className="text-muted-foreground">
                       Customize your experience
@@ -384,28 +389,31 @@ export default function Settings() {
                         <p className="text-sm text-muted-foreground">Automatically play the next ad</p>
                       </div>
                       <Switch
+                        className=""
                         checked={settings.autoPlay}
                         onCheckedChange={() => handleToggle('autoPlay')}
                       />
                     </div>
-                    <Separator />
+                    <Separator className="" />
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
                         <p className="font-medium text-foreground">Sound Effects</p>
                         <p className="text-sm text-muted-foreground">Play sounds for actions</p>
                       </div>
                       <Switch
+                        className=""
                         checked={settings.soundEffects}
                         onCheckedChange={() => handleToggle('soundEffects')}
                       />
                     </div>
-                    <Separator />
+                    <Separator className="" />
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
                         <p className="font-medium text-foreground">Dark Mode</p>
                         <p className="text-sm text-muted-foreground">Switch to dark theme</p>
                       </div>
                       <Switch
+                        className=""
                         checked={settings.darkMode}
                         onCheckedChange={() => handleToggle('darkMode')}
                       />
@@ -416,7 +424,7 @@ export default function Settings() {
 
               {/* Danger Zone */}
               <Card className="border-0 shadow-sm border-red-500/30 bg-card">
-                <CardHeader>
+                <CardHeader className="">
                   <CardTitle className="text-lg text-red-400 flex items-center gap-2">
                     <AlertCircle className="w-5 h-5" />
                     Danger Zone
@@ -425,7 +433,7 @@ export default function Settings() {
                     Irreversible actions
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="">
                   <Button
                     variant="outline"
                     className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"

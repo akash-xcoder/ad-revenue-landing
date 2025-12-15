@@ -87,7 +87,7 @@ export default function Profile() {
               <div className="absolute -top-16 left-6">
                 <div className="relative">
                   <Avatar className="w-32 h-32 border-4 border-card shadow-lg">
-                    <AvatarImage src={user?.user_metadata?.avatar_url} />
+                    <AvatarImage src={user?.user_metadata?.avatar_url} className="" />
                     <AvatarFallback className="bg-primary text-primary-foreground text-3xl font-bold">
                       {getUserInitials()}
                     </AvatarFallback>
@@ -105,7 +105,7 @@ export default function Profile() {
                     <h1 className="text-2xl font-bold text-foreground">
                       {user?.user_metadata?.full_name || 'User'}
                     </h1>
-                    <Badge className="bg-amber-500/20 text-amber-400 border-0">
+                    <Badge variant="default" className="bg-amber-500/20 text-amber-400 border-0">
                       <Award className="w-3 h-3 mr-1" />
                       {stats.level}
                     </Badge>
@@ -179,13 +179,13 @@ export default function Profile() {
 
           {/* Level Progress */}
           <Card className="border-0 shadow-sm mb-6 bg-card">
-            <CardHeader>
+            <CardHeader className="">
               <CardTitle className="text-lg text-foreground">Level Progress</CardTitle>
               <CardDescription className="text-muted-foreground">
                 You're {100 - stats.levelProgress}% away from {stats.nextLevel}
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
                   <Award className="w-6 h-6 text-amber-400" />
@@ -209,7 +209,7 @@ export default function Profile() {
 
           {/* Quick Actions */}
           <Card className="border-0 shadow-sm bg-card">
-            <CardHeader>
+            <CardHeader className="">
               <CardTitle className="text-lg text-foreground">Quick Actions</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
@@ -236,18 +236,6 @@ export default function Profile() {
                   <div className="text-left">
                     <p className="font-medium text-foreground">Withdraw Funds</p>
                     <p className="text-sm text-muted-foreground">${stats.pendingBalance.toFixed(2)} available</p>
-                  </div>
-                </div>
-                <ChevronRight className="w-5 h-5 text-muted-foreground" />
-              </button>
-              <button className="w-full flex items-center justify-between p-4 hover:bg-muted transition border-b border-border">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <History className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-medium text-foreground">Transaction History</p>
-                    <p className="text-sm text-muted-foreground">View all transactions</p>
                   </div>
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />

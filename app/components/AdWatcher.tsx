@@ -282,7 +282,7 @@ export default function AdWatcher() {
                 {currentAd.category}
               </Badge>
               {isWatched && (
-                <Badge className="ml-2 bg-green-500 text-white border-0">
+                <Badge variant="default" className="ml-2 bg-green-500 text-white border-0">
                   <CheckCircle2 className="w-3 h-3 mr-1" />
                   Watched
                 </Badge>
@@ -463,7 +463,7 @@ export default function AdWatcher() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-muted-foreground/70 text-sm">Available Balance</p>
-                <Badge className="bg-muted/20 text-muted-foreground border-0 text-[10px]">USD</Badge>
+                <Badge variant="default" className="bg-muted/20 text-muted-foreground border-0 text-[10px]">USD</Badge>
               </div>
               <p className="text-3xl font-bold text-primary mb-1">${(12.50 + earnedAmount).toFixed(2)}</p>
               <p className="text-muted-foreground/70 text-xs mb-3">+${earnedAmount.toFixed(2)} today</p>
@@ -530,7 +530,7 @@ export default function AdWatcher() {
             </div>
           </div>
 
-          <Separator />
+          <Separator className="my-4 border-t border-border" />
 
           {/* Weekly Summary */}
           <div>
@@ -557,7 +557,7 @@ export default function AdWatcher() {
             </div>
           </div>
 
-          <Separator />
+          <Separator className="my-4 border-t border-border" />
 
           {/* Rewards & Bonuses */}
           <div>
@@ -590,7 +590,7 @@ export default function AdWatcher() {
             </div>
           </div>
 
-          <Separator />
+          <Separator className="my-4 border-t border-border" />
 
           {/* Recent Activity */}
           <div>

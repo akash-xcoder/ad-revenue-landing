@@ -60,7 +60,7 @@ export default function WhyChooseUs() {
             const IconComponent = reason.icon;
             return (
               <Card key={index} className="border-border/50 bg-card hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
-                <CardHeader>
+                <CardHeader className="">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 rounded-lg bg-primary/10">
                       <IconComponent className="w-6 h-6 text-primary" />
@@ -68,7 +68,7 @@ export default function WhyChooseUs() {
                   </div>
                   <CardTitle className="text-lg text-foreground">{reason.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="">
                   <p className="text-muted-foreground leading-relaxed">
                     {reason.description}
                   </p>

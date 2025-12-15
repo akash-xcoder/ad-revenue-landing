@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { registerVideoInDatabase } from '../lib/supabase';
+import { useRouter } from 'next/navigation';
+// import { registerVideoInDatabase } from '../lib/supabase';
+
+// Mock function for now
+const registerVideoInDatabase = async (storagePath: string, filename: string, metadata: any) => true;
 
 export default function AdminPanel() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -48,7 +51,7 @@ export default function AdminPanel() {
       }
 
       setMessage((prev) => `${prev}\n\nAll videos registered! Redirecting...`);
-      setTimeout(() => navigate('/watch-ads'), 2000);
+      setTimeout(() => router.push('/watch-ads'), 2000);
     } catch (error) {
       setMessage(`Error: ${error}`);
     } finally {
@@ -79,7 +82,7 @@ export default function AdminPanel() {
         </button>
 
         <button
-          onClick={() => navigate('/')}
+          onClick={() => router.push('/')}
           className="w-full btn-neon px-6 py-3 rounded-lg font-semibold"
         >
           Back to Home
