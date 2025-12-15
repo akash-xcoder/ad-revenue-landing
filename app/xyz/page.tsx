@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "../components/Header";
 import LandingHero from "../components/LandingHero";
 import LandingTestimonials from "../components/LandingTestimonials";
