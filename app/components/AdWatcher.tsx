@@ -287,6 +287,7 @@ export default function AdWatcher() {
                   Watched
                 </Badge>
               )}
+              {/* Fixed variant prop for Badge */}
             </div>
 
             {/* Play button center */}
