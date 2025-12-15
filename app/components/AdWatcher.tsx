@@ -282,7 +282,7 @@ export default function AdWatcher() {
                 {currentAd.category}
               </Badge>
               {isWatched && (
-                <Badge variant="default" className="ml-2 bg-green-500 text-white border-0">
+                <Badge variant="secondary" className="ml-2 bg-green-500 text-white border-0">
                   <CheckCircle2 className="w-3 h-3 mr-1" />
                   Watched
                 </Badge>
