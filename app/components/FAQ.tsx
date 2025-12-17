@@ -8,36 +8,24 @@ export default function FAQ() {
 
   const faqs = [
     {
-      question: 'Is AdzoPay really free to use?',
-      answer: 'Yes, AdzoPay is 100% free to join and use. There are no hidden fees, no credit card required, and no charges for withdrawals. You only earn money.',
+      question: 'Is this free to use?',
+      answer: 'Yes. Creating an account and watching ads is completely free. You never need to pay to start earning.',
     },
     {
-      question: 'How much can I earn?',
-      answer: 'Earnings vary based on your region, the number of ads available, and how much time you spend. On average, users earn between $1-5 per hour. Some users earn more by being active daily.',
+      question: 'How do I earn money?',
+      answer: 'You earn by watching short sponsored ads and completing simple promotional tasks. Earnings are credited after each successful ad view.',
     },
     {
       question: 'When can I withdraw my earnings?',
-      answer: 'You can withdraw your earnings anytime once you reach a minimum balance of $5. Payouts are processed instantly to your bank account or digital wallet.',
+      answer: 'You can request a withdrawal once you reach the minimum withdrawal limit. Payments are processed within the stated time frame.',
     },
     {
-      question: 'Is my personal information safe?',
-      answer: 'Absolutely. We use bank-level encryption to protect your data. Your information is never shared with third parties without your consent.',
+      question: 'Which payment methods are supported?',
+      answer: 'We support multiple payment options such as UPI-based wallets and other popular digital payment methods.',
     },
     {
-      question: 'How do I get started?',
-      answer: 'Simply sign up with your email, verify your account, and start watching ads. You can begin earning within minutes of signing up.',
-    },
-    {
-      question: 'Can I use AdzoPay on mobile?',
-      answer: 'Yes, AdzoPay works on all devices including smartphones, tablets, and computers. Download our mobile app for the best experience.',
-    },
-    {
-      question: 'What payment methods are supported?',
-      answer: 'We support bank transfers, PayPal, Stripe, and various digital wallets. Choose your preferred payment method during withdrawal.',
-    },
-    {
-      question: 'Is there a referral program?',
-      answer: 'Yes! Invite friends and earn 10% of their earnings for life. No limit on how much you can earn through referrals.',
+      question: 'What happens if I violate the rules?',
+      answer: 'Accounts involved in misuse, automation, or fraudulent activity may be suspended and earnings may be forfeited as per our Terms & Conditions.',
     },
   ];
 
